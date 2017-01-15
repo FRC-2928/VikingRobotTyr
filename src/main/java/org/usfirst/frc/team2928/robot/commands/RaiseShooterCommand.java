@@ -14,22 +14,18 @@ public class RaiseShooterCommand extends Command {
 	public RaiseShooterCommand(String name) {
 		super(name);
 		requires(Robot.lifter);
-		// TODO Auto-generated constructor stub
 	}
 
 	public RaiseShooterCommand(double timeout) {
 		super(timeout);
-		// TODO Auto-generated constructor stub
 	}
 
 	public RaiseShooterCommand(String name, double timeout) {
 		super(name, timeout);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 	}
 
 	
@@ -40,7 +36,6 @@ public class RaiseShooterCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -49,7 +44,6 @@ public class RaiseShooterCommand extends Command {
 		Robot.lifter.Stop();
 		SmartDashboard.putNumber("EncPos", Robot.lifter.lifterPos());
 
-		// TODO Auto-generated method stub
 
 	}
 
@@ -58,7 +52,6 @@ public class RaiseShooterCommand extends Command {
 		Robot.lifter.Stop();
 		SmartDashboard.putNumber("EncPos", Robot.lifter.lifterPos());
 
-		// TODO Auto-generated method stub
 
 	}
 

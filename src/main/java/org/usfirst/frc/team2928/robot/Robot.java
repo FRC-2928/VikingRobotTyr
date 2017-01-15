@@ -1,7 +1,15 @@
 package org.usfirst.frc.team2928.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team2928.robot.commands.DriveCommand;
+import org.usfirst.frc.team2928.robot.commands.OuttakeCommand;
+import org.usfirst.frc.team2928.robot.commands.RotateCommand;
 import org.usfirst.frc.team2928.robot.subsystems.Drivebase;
+import org.usfirst.frc.team2928.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2928.robot.subsystems.GyroPid;
 import org.usfirst.frc.team2928.robot.subsystems.Lifter;
 import org.usfirst.frc.team2928.robot.subsystems.Shifter;
@@ -10,10 +18,6 @@ import org.usfirst.frc.team2928.robot.subsystems.ShooterSolenoid;
 import org.usfirst.frc.team2928.robot.subsystems.Spinner;
 import org.usfirst.frc.team2928.robot.subsystems.Tomahawk;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -48,18 +52,25 @@ public class Robot extends IterativeRobot {
     	spinner = new Spinner();
 		shift = new Shifter();
 		lifter = new Lifter();
-		gyroPid = new GyroPid("pid", .5,0,0,0);
+		gyroPid = new GyroPid("pid", .00005,0,0,0);
 		shooterMotors = new ShooterMotors();
 		shooterSolen = new ShooterSolenoid();
         chooser = new SendableChooser();
         tomahawk = new Tomahawk();
+        
+        //chooser.addDefault("Default Auto", new RotateCommand());
+       
+        
+//        chooser.addObject("My Auto", new MyAutoCommand());
+  
+        SmartDashboard.putData("Auto mode", chooser);
 
-        LiveWindow.addActuator("gyroPid", "GyroPid", gyroPid.getPIDController());
     }	
 	
 	/**
      * This function is called once each time the robot enters Disabled mode.
-     * You can use it to reset any subsystem information you want to clear when
+     * You can use it to reset any subsystem information you want to clear wh
+     * en
 	 * the robot is disabled.
      */
     public void disabledInit(){
@@ -80,14 +91,18 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-		String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+        //autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = new RotateCommand();
+		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
-		case "Rotate 90":
-		default:
-			autonomousCommand = (Command) chooser.getSelected();
+		case "My Auto":
+			autonomousCommand = new MyAutoCommand();
 			break;
-		}
+		case "Default Auto":
+		default:
+			autonomousCommand = new ExampleCommand();
+			break;
+		} */
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
@@ -97,6 +112,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	
         Scheduler.getInstance().run();
     }
 

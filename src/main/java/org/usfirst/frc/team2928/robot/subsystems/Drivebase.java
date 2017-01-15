@@ -21,10 +21,9 @@ public class Drivebase extends Subsystem {
 					 new CANTalon(RobotMap.frontRightDrive),new CANTalon(RobotMap.backRightDrive));
 	}
 	
-	public void drive(){
-		//The wires must be plugged in backwards because there had 
-		//to be negative signs here to make it work properly.
-		drive.arcadeDrive(-OI.stick.getX(), -OI.stick.getY());
+	public void drive(double moveValue, double rotateValue){
+		//moveValue and rotateValue had signs inverted and were swapped to fix a wiring error
+		drive.arcadeDrive(-rotateValue,-moveValue);
 	}
 	
 	public void rotate(double angularVelocity){

@@ -2,7 +2,6 @@ package org.usfirst.frc.team2928.robot;
 
 import org.usfirst.frc.team2928.robot.commands.DriveCommand;
 import org.usfirst.frc.team2928.robot.subsystems.Drivebase;
-import org.usfirst.frc.team2928.robot.subsystems.GyroPid;
 import org.usfirst.frc.team2928.robot.subsystems.Lifter;
 import org.usfirst.frc.team2928.robot.subsystems.Shifter;
 import org.usfirst.frc.team2928.robot.subsystems.ShooterMotors;
@@ -34,8 +33,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Shifter shift;
 	public static Lifter lifter;
-	public static Spinner spinner; 
-	public static GyroPid gyroPid;
+	public static Spinner spinner;
 	
     Command autonomousCommand;
     SendableChooser chooser;
@@ -48,13 +46,10 @@ public class Robot extends IterativeRobot {
     	spinner = new Spinner();
 		shift = new Shifter();
 		lifter = new Lifter();
-		gyroPid = new GyroPid("pid", .5,0,0,0);
 		shooterMotors = new ShooterMotors();
 		shooterSolen = new ShooterSolenoid();
         chooser = new SendableChooser();
         tomahawk = new Tomahawk();
-
-        LiveWindow.addActuator("gyroPid", "GyroPid", gyroPid.getPIDController());
     }	
 	
 	/**

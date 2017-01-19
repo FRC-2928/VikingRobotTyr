@@ -1,40 +1,37 @@
 package org.usfirst.frc.team2928.robot.commands;
 
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import org.usfirst.frc.team2928.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RotateCommand extends Command {
+public class RotateCommand extends PIDCommand {
 
 	public RotateCommand() {
-		requires(Robot.gyroPid);
-		Robot.gyroPid.enable();
+		super(.5,0,0);
+		requires(Robot.drivebase);
+		getPIDController().setAbsoluteTolerance(1);
+		getPIDController().setOutputRange(-.6,.6);
+        setSetpoint(90);
 	}
 
 	@Override
-	protected void initialize() {
-		Robot.gyroPid.calibrate();
-		Robot.gyroPid.setSetpoint(90);
-	}
-
-	@Override
-	protected void execute() {
-
+    protected void initialize(){
+	    Robot.drivebase.calibrateGyro();
     }
+
+	@Override
+	protected double returnPIDInput() {
+		return Robot.drivebase.getGyroAngle();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+        Robot.drivebase.rotate(output);
+	}
 
 	@Override
 	protected boolean isFinished() {
-	    return Robot.gyroPid.onTarget();
+		return getPIDController().onTarget();
 	}
-
-	@Override
-	protected void end() {
-	    Robot.drivebase.stop();
-    }
-
-	@Override
-	protected void interrupted() {
-		end();
-	}
-
 }

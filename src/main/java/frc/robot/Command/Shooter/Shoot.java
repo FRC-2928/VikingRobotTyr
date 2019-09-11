@@ -1,0 +1,14 @@
+package frc.robot.Command.Shooter;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+
+public class Shoot extends CommandGroup {
+
+    public Shoot(double output)
+    {
+        addParallel(new RunWheels(output), 2.1);
+        addSequential(new WaitCommand(2));
+        addSequential(new Flip(), 0.1);
+    }
+}
